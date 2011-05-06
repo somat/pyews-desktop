@@ -1,0 +1,10 @@
+# Requirements :
+* pygtk 2.0
+* gobject
+* python-irclib
+
+# TODO
+* Show connection status
+* IRC Data Config
+
+# Contact me : Akhmat Safrudin <somat@airputih.or.id>
