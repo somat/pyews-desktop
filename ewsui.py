@@ -34,7 +34,8 @@ class EwsWindow:
         #setup main window
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("Peringatan Dini Gempa")
-        self.window.set_size_request(650, 500)
+        self.window.set_size_request(800, 500)
+        self.window.set_icon_from_file('/usr/share/pixmaps/ews.png')
         self.window.connect("delete_event", self.delete_event)
         
         #setup model
@@ -58,6 +59,7 @@ class EwsModel:
     def __init__(self):
         self.treestore = gtk.TreeStore( gobject.TYPE_STRING, gobject.TYPE_STRING,
                                         gobject.TYPE_STRING, gobject.TYPE_STRING,
+                                        gobject.TYPE_STRING, gobject.TYPE_STRING,
                                         gobject.TYPE_STRING)
         return
     
@@ -79,15 +81,19 @@ class EwsView:
 
         self.date      = gtk.TreeViewColumn("Tanggal", self.renderer, text=0)
         self.time      = gtk.TreeViewColumn("Jam", self.renderer, text=1)
-        self.magnitude = gtk.TreeViewColumn("Magnitude", self.renderer, text=2)
-        self.location  = gtk.TreeViewColumn("Lokasi", self.renderer, text=3)
+        self.coordinat = gtk.TreeViewColumn("Koordinat", self.renderer, text=2)
+        self.magnitude = gtk.TreeViewColumn("Magnitude", self.renderer, text=3)
         self.depth     = gtk.TreeViewColumn("Kedalaman", self.renderer, text=4)
+        self.region    = gtk.TreeViewColumn("Lokasi", self.renderer, text=5)
+        self.potential = gtk.TreeViewColumn("Potensi", self.renderer, text=6)
         
         self.treeview.append_column(self.date)
         self.treeview.append_column(self.time)
+        self.treeview.append_column(self.coordinat)
         self.treeview.append_column(self.magnitude)
-        self.treeview.append_column(self.location)
         self.treeview.append_column(self.depth)
+        self.treeview.append_column(self.region)
+        self.treeview.append_column(self.potential)
         
         return self.treeview
 

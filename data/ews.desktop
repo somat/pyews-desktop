@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=EWS Desktop
+Comment=Early Warning Disaster Information System
+Exec=ews
+Icon=ews.png
+Terminal=false
+Type=Application
+Categories=Application;Network;

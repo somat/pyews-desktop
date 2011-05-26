@@ -22,6 +22,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from random import choice
+import string
 from irclib import SimpleIRCClient, ServerConnectionError, nm_to_n, is_channel
 
 class IRCListner(object):
@@ -38,12 +40,12 @@ class IRCListner(object):
         return
 
 class IRCClient(SimpleIRCClient):
-    def __init__(self, server, port, nickname, channel, listner):
+    def __init__(self, config, listner):
         SimpleIRCClient.__init__(self)
-        self.server = server
-        self.port = port
-        self.nickname = nickname
-        self.channel = channel
+        self.server = config['irc']['server']
+        self.port = 6667
+        self.nickname = self._generate_nick()
+        self.channel = config['irc']['channel']
         self.listner = listner
     
     def on_welcome(self, connection, event):
@@ -62,6 +64,10 @@ class IRCClient(SimpleIRCClient):
     
     def on_pubmsg(self, connection, event):
         self.listner.on_data(event.arguments()[0], nm_to_n(event.source()))
+    
+    def _generate_nick(self):
+        nick = ''.join([choice(string.letters + string.digits) for i in range(10)])
+        return nick
     
     def _connect(self):
         try:

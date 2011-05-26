@@ -24,6 +24,7 @@
 
 from ewsui import EwsModel, EwsView, EwsWindow, DesktopListner
 from ircclient import IRCClient
+from configobj import ConfigObj
 
 import threading
 import time
@@ -48,17 +49,15 @@ class EwsThread(threading.Thread):
             time.sleep(0.1)
 
 if __name__ == "__main__":
+    config = ConfigObj('/etc/ews.conf')
+    
     Model   = EwsModel()
     View    = EwsView()
     EwsUI   = EwsWindow(Model, View)
     Listner = DesktopListner(Model)
-
-    server = "irc.freenode.net"
-    port = 6667
-    nickname = "sfe3456"
-    channel = "#kpli-pekalongan"
-
-    conn = IRCClient(server, port, nickname, channel, Listner)
+    
+    
+    conn = IRCClient(config, Listner)
     ews = EwsThread(conn)
     ews.start()
     EwsUI.run()

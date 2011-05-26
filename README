@@ -1,10 +1,15 @@
-# Requirements :
+# Requirements:
 * pygtk 2.0
-* gobject
 * python-irclib
 
-# TODO
+# TODO:
 * Show connection status
-* IRC Data Config
+* Ring alarm when reveived new data
+
+# ChangeLog:
+--8 May 2011
+  * IRC Data read from external config file
+  * Generate random nick
+  * Update length of disaster data
 
 # Contact me : Akhmat Safrudin <somat@airputih.or.id>
