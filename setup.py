@@ -4,8 +4,9 @@ from setuptools import setup
 
 setup(name='pyews',
       version='1.0',
-      py_modules=["ews", "ewsui", "ircclient"],
-      data_files=[('/usr/share/bitmaps', ['data/ews.png']),
+      py_modules=["ewsui", "ircclient"],
+      data_files=[('/usr/bin', ['ews']),
+                  ('/usr/share/bitmaps', ['data/ews.png']),
                   ('/etc', ['data/ews.conf']),
                   ('/usr/share/applications', ['data/ews.desktop']),
                   ('/usr/share/pyews', ['data/gempa.wav']),
@@ -18,5 +19,4 @@ setup(name='pyews',
       license = "GPL V3",
       keywords = "ews, python, pygtk",
       url = "http://www.airputih.or.id",
-      
       )
