@@ -27,12 +27,20 @@ import string
 from irclib import SimpleIRCClient, ServerConnectionError, nm_to_n, is_channel
 
 class IRCListner(object):
-    def on_data(self, data, source):
-        """Called when new data arrives"""
+    def on_connect(self):
+        ''' Called when connecting '''
         return
     
-    def on_connected(self):
-        """Called when connected"""
+    def on_welcome(self):
+        ''' Called when connected '''
+        return
+    
+    def on_join(self):
+        ''' Called when joining room '''
+        return
+    
+    def on_data(self, data, source):
+        """Called when new data arrives"""
         return
     
     def on_disconnected(self):
@@ -47,23 +55,29 @@ class IRCClient(SimpleIRCClient):
         self.nickname = self._generate_nick()
         self.channel = config['irc']['channel']
         self.listner = listner
+
+    def on_connect(self, connection, event):
+        self.listner.on_connect()
     
     def on_welcome(self, connection, event):
-        self.listner.on_connected()
+        self.listner.on_welcome()
         if is_channel(self.channel):
             connection.join(self.channel)
         else:
             sys.exit(1)
-
-    def on_nicknameinuse(self, c, e):
-        c.nick(c.get_nickname() + "_")
+            
+    def on_join(self, connection, event):
+        self.listner.on_join()
+    
+    def on_pubmsg(self, connection, event):
+        self.listner.on_data(event.arguments()[0], nm_to_n(event.source()))
     
     def on_disconnect(self, connection, event):
         self.listner.on_disconnected()
         self.connection.execute_delayed(0, self._reconnect)
     
-    def on_pubmsg(self, connection, event):
-        self.listner.on_data(event.arguments()[0], nm_to_n(event.source()))
+    def on_nicknameinuse(self, c, e):
+        c.nick(c.get_nickname() + "_")
     
     def _generate_nick(self):
         nick = ''.join([choice(string.letters + string.digits) for i in range(10)])

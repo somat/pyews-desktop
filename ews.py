@@ -54,8 +54,7 @@ if __name__ == "__main__":
     Model   = EwsModel()
     View    = EwsView()
     EwsUI   = EwsWindow(Model, View)
-    Listner = DesktopListner(Model)
-    
+    Listner = DesktopListner(Model, EwsUI.status_label)
     
     conn = IRCClient(config, Listner)
     ews = EwsThread(conn)
